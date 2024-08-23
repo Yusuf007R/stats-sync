@@ -20,10 +20,14 @@ public class StatsSync implements ModInitializer {
 
 
     public void onInitialize() {
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("statSync").executes((c) -> new StatsSyncCommand(c).executeAllObjectivesAllPlayers())
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("statSync")
+                .requires(source -> source.hasPermission(4))
+                .executes((c) -> new StatsSyncCommand(c).executeAllObjectivesAllPlayers())
                 .then(argument("objective", new ObjectiveArgument()).executes(c -> new StatsSyncCommand(c).executeSpecificObjectiveAllPlayers())
                         .then(argument("player", StringArgumentType.word()).suggests((c, b) -> suggest(userCacheManager.getUserCache()
-                                        .stream().map(user -> user.profile().getName()), b))
+                                        .stream()
+                                        .map(user -> user.profile()
+                                                .getName()), b))
                                 .executes(c -> new StatsSyncCommand(c).executeSpecificObjectiveSpecificPlayer())))));
     }
 }
