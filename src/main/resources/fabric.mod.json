@@ -17,17 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"com.yusuf007r.statssync.StatsSync"
-		],
-		"client": [
-			"com.yusuf007r.statssync.StatsSyncClient"
 		]
 	},
 	"mixins": [
-		"statssync.mixins.json",
-		{
-			"config": "statssync.client.mixins.json",
-			"environment": "client"
-		}
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
